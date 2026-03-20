@@ -14,29 +14,62 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const questionElement = document.getElementById("question");
 const scoreElement = document.getElementById("score");
 const nextButton = document.getElementById("next-question");
+const timerElement = document.getElementById("timer");
 
 let currentQuestionIdx = 0;
 let questions = []; // Will be populated from the server
+let isClickable = true;
+let timer;
+let timeLeft = 30; //seconds
 
 // Fetch questions from the server
 fetch('/api/questions')
   .then(response => response.json())
   .then(data => {
     questions = data.questions;
-    //create code so that only 5 questions are fetched at random!
+    //questions = data.questions.sort(() => 0.5 - Math.random()).slice(0,5);
     //currentQuestionIdx = Math.random() * questions.length | 0; // Start with a random question
     loadQuestion();
   })
   .catch(error => console.error('Error fetching questions:', error));
 
+const startTimer = () => {
+  clearInterval(timer);
+  timeLeft = 30;
+  updateTimer();
+
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+    if (timeLeft <= 0) {
+      handleTimeout();
+    }
+  },1000);
+};
+const updateTimer = () => {
+  timerElement.textContent = `Time: ${timeLeft}s`;
+};
+const handleTimeout = () => {
+  isClickable = false;
+  clearInterval(timer);
+  const currentQuestion = questions[currentQuestionIdx]
+  currentQuestionIdx++;
+  questionElement.textContent = `Time is up! Answer was ${currentQuestion.Answer}`;
+  showCorrectLocation(currentQuestion.lat, currentQuestion.lng);
+}
+
+
 const loadQuestion = () => {
   if (questions.length === 0) return;
   if (currentQuestionIdx >= questions.length) {
+    clearInterval(timer);
     alert(`Your final score is ${points}.`);
   }
   else{
+    isClickable = true;
     const currentQuestion = questions[currentQuestionIdx];
     questionElement.textContent = currentQuestion.question;
+    startTimer();
   }
 }
 
@@ -57,6 +90,10 @@ const showCorrectLocation = (lat, lng) => {
 }
 
 const checkAnswer = (e) => {
+  if(!isClickable) return;
+
+  isClickable = false;
+  clearInterval(timer);
   const currentQuestion = questions[currentQuestionIdx];
   const lat = e.latlng.lat;
   const lng = e.latlng.lng;
@@ -65,13 +102,12 @@ const checkAnswer = (e) => {
     [lat, lng],
     [currentQuestion.lat, currentQuestion.lng]
   )
-
-  var currentPoints = Math.floor(distance / 15000) * 100;
-  points +=  Math.max(0, 1000 - (currentPoints));
-  //alert(`you got ${points}!`)
+  //maybe add timer options for extra points?
+  var currentPoints = Math.max(0, 1000 - Math.floor(distance / 15000) * 100);
+  points +=  currentPoints;
   scoreElement.textContent = `Score: ${points}`;
   showCorrectLocation(currentQuestion.lat, currentQuestion.lng);
-  questionElement.textContent = "The Answer was " + currentQuestion.Answer;
+  questionElement.textContent = "The Answer was " + currentQuestion.Answer + ". You got " + currentPoints + " points!";
 
   
   currentQuestionIdx = (currentQuestionIdx + 1); //% questions.length;
