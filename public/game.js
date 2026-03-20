@@ -1,9 +1,14 @@
 // Initialize map
-const map = L.map("map").setView([20, 0], 2);
+//const map = L.map("map").setView([20, 0], 2);
+const map = L.map("map", {
+  center: [20, 0],
+  zoom: 2,
+  zoomControl: false
+})
 var points = 0;
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    //attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
 const questionElement = document.getElementById("question");
@@ -18,6 +23,7 @@ fetch('/api/questions')
   .then(response => response.json())
   .then(data => {
     questions = data.questions;
+    //create code so that only 5 questions are fetched at random!
     //currentQuestionIdx = Math.random() * questions.length | 0; // Start with a random question
     loadQuestion();
   })
@@ -65,6 +71,7 @@ const checkAnswer = (e) => {
   //alert(`you got ${points}!`)
   scoreElement.textContent = `Score: ${points}`;
   showCorrectLocation(currentQuestion.lat, currentQuestion.lng);
+  questionElement.textContent = "The Answer was " + currentQuestion.Answer;
 
   
   currentQuestionIdx = (currentQuestionIdx + 1); //% questions.length;
