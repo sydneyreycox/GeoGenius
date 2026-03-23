@@ -1,6 +1,6 @@
 // Initialize map
 //const map = L.map("map").setView([20, 0], 2);
-const map = L.map("map", {
+var map = L.map("map", {
   center: [20, 0],
   zoom: 2,
   zoomControl: false
@@ -11,10 +11,10 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-const questionElement = document.getElementById("question");
-const scoreElement = document.getElementById("score");
-const nextButton = document.getElementById("next-question");
-const timerElement = document.getElementById("timer");
+var questionElement = document.getElementById("question");
+var scoreElement = document.getElementById("score");
+var nextButton = document.getElementById("next-question");
+var timerElement = document.getElementById("timer");
 
 let currentQuestionIdx = 0;
 let questions = []; // Will be populated from the server
@@ -27,13 +27,11 @@ fetch('/api/questions')
   .then(response => response.json())
   .then(data => {
     questions = data.questions;
-    //questions = data.questions.sort(() => 0.5 - Math.random()).slice(0,5);
-    //currentQuestionIdx = Math.random() * questions.length | 0; // Start with a random question
     loadQuestion();
   })
   .catch(error => console.error('Error fetching questions:', error));
 
-const startTimer = () => {
+var startTimer = () => {
   clearInterval(timer);
   timeLeft = 30;
   updateTimer();
@@ -46,35 +44,37 @@ const startTimer = () => {
     }
   },1000);
 };
-const updateTimer = () => {
+var updateTimer = () => {
   timerElement.textContent = `Time: ${timeLeft}s`;
 };
-const handleTimeout = () => {
+var handleTimeout = () => {
   isClickable = false;
   clearInterval(timer);
-  const currentQuestion = questions[currentQuestionIdx]
+  var currentQuestion = questions[currentQuestionIdx]
   currentQuestionIdx++;
   questionElement.textContent = `Time is up! Answer was ${currentQuestion.Answer}`;
   showCorrectLocation(currentQuestion.lat, currentQuestion.lng);
 }
 
 
-const loadQuestion = () => {
+var loadQuestion = () => {
   if (questions.length === 0) return;
   if (currentQuestionIdx >= questions.length) {
     clearInterval(timer);
-    alert(`Your final score is ${points}.`);
+    questionElement.textContent = `Your Final Score: ${points}`
+    updateTimer();
+    //alert(`Your final score is ${points}.`);
   }
   else{
     isClickable = true;
-    const currentQuestion = questions[currentQuestionIdx];
+    var currentQuestion = questions[currentQuestionIdx];
     questionElement.textContent = currentQuestion.question;
     startTimer();
   }
 }
 
-const showCorrectLocation = (lat, lng) => {
-  const marker = L.marker([lat, lng], {
+var showCorrectLocation = (lat, lng) => {
+  var marker = L.marker([lat, lng], {
     icon: L.divIcon({
       className: "correct-location",
       html: '<div style="background: red; width: 12px; height: 12px; border-radius: 50%;"></div>',
@@ -89,16 +89,16 @@ const showCorrectLocation = (lat, lng) => {
   }, 3000)
 }
 
-const checkAnswer = (e) => {
+var checkAnswer = (e) => {
   if(!isClickable) return;
 
   isClickable = false;
   clearInterval(timer);
-  const currentQuestion = questions[currentQuestionIdx];
-  const lat = e.latlng.lat;
-  const lng = e.latlng.lng;
+  var currentQuestion = questions[currentQuestionIdx];
+  var lat = e.latlng.lat;
+  var lng = e.latlng.lng;
 
-  const distance = map.distance(
+  var distance = map.distance(
     [lat, lng],
     [currentQuestion.lat, currentQuestion.lng]
   )
