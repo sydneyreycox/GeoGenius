@@ -7,8 +7,8 @@ var map = L.map("map", {
 })
 var points = 0;
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO'
 }).addTo(map);
 
 var questionElement = document.getElementById("question");
