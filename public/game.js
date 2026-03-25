@@ -91,7 +91,7 @@ var showCorrectLocation = (lat, lng) => {
   }).addTo(map);
   map.flyTo([lat, lng], 6, {
     animate: true,
-    duration: 1, // 1 second
+    duration: 1,
   });
 
   setTimeout(() => {
@@ -121,11 +121,11 @@ var checkAnswer = (e) => {
   questionElement.textContent = "The Answer was " + currentQuestion.Answer + ". You got " + currentPoints + " points!";
 
   
-  currentQuestionIdx = (currentQuestionIdx + 1); //% questions.length;
+  currentQuestionIdx = (currentQuestionIdx + 1);
 }
 
 map.on("click", checkAnswer);
-//
+// Maybe good for confimation picks (really close to geoguesser honestly) -- not high priority
 //nextButton.addEventListener("click", () => {
 //  currentQuestionIdx = (currentQuestionIdx + 1) % questions.length;
 //  loadQuestion();
