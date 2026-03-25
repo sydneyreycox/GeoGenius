@@ -3,7 +3,8 @@
 var map = L.map("map", {
   center: [20, 0],
   zoom: 2,
-  zoomControl: false
+  zoomControl: false,
+  worldCopyJump: true
 })
 var points = 0;
 
@@ -102,7 +103,7 @@ var checkAnswer = (e) => {
     [lat, lng],
     [currentQuestion.lat, currentQuestion.lng]
   )
-  //maybe add timer options for extra points?
+  //maybe add timer options for extra points? KINDA PUNISHING FOR BIG CITIES!
   var currentPoints = Math.max(0, 1000 - Math.floor(distance / 15000) * 100);
   points +=  currentPoints;
   scoreElement.textContent = `Score: ${points}`;
