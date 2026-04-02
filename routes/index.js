@@ -38,4 +38,9 @@ router.get('/api/questions', function(req, res) {
   });
 });
 
+router.get('/home', function(req, res, next) {
+  res.render('home');
+});
+
+
 module.exports = router;
