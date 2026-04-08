@@ -10,10 +10,10 @@ var db = mysql.createPool({
   database: process.env.DB_NAME
 });
 
-router.get('/', function(req, res, next) {
+router.get('/game', function(req, res, next) {
   db.query('SELECT * FROM question', (err, results) => {
     if (err) throw err;
-    res.render('index', {question: results});
+    res.render('game', {question: results});
   });
 });
 
@@ -38,7 +38,7 @@ router.get('/api/questions', function(req, res) {
   });
 });
 
-router.get('/home', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.render('home');
 });
 
