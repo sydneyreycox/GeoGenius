@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>GeoGenius</title>
-    </head>
-    <body>
-        <p>You are in the home page!</p>
-    </body>
+<head>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <nav>
+    <div class="logo">🌍 GeoGenius</div>
+    <div class="nav-links">
+      <% if (user) { %>
+        <span>Welcome, <strong><%= user.username %></strong></span>
+        <a href="/users/logout">Logout</a>
+      <% } else { %>
+        <a href="/users/login">Login</a>
+        <a href="/users/register">Register</a>
+      <% } %>
+    </div>
+  </nav>
+  <div class="hero-section">
+    <a href="/game" class="start-btn">START QUIZ</a>
+  </div>
+</body>
 </html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoGenius Register</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <div class="auth-container">
+    <h1>Register</h1>
+    <p style="font-size: 1.2rem;">Create an account to play!</p>
+    <form action="/users" method="POST">
+      <input type="text" name="username" placeholder="Choose a Username" required>
+      <input type="password" name="password" placeholder="Choose a Password" required>
+      <button type="submit" class="auth-button">Create Account</button>
+    </form>
+    <a href="/users/login">Already have an account? Login here</a>
+  </div>
+</body>
+</html>

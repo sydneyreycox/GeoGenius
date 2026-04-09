@@ -51,24 +51,131 @@ p {
   margin-bottom: 20px;
 }
 
-/* button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  background-color: yellow;
-  color: black;
-  cursor: pointer;
-  transition:
-    backgrounf-color 0.3s,
-    transform 0.3s ease;
-} 
-
-button:hover {
-  background-color: darkgrey;
-  transform: scale(2);
-} */
-
 a {
   color: #00b7ff;
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* so we can see it! */
+}
+
+.modal-content {
+  background: #008000;
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  border: 4px solid #ffff00;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  color: white;
+  min-width: 300px;
+}
+
+#final-score-display {
+  font-size: 4rem;
+  color: #ffff00;
+  margin: 10px 0;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* registration and login styles */
+.auth-container {
+  background: #008000;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ffff00;
+  color: black;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.auth-button:hover {
+  background-color: #d4d400;
+  transform: scale(1.05);
+}
+
+.auth-container a {
+  display: block;
+  margin-top: 15px;
+  color: white;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+/* styles for the nav bar */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(0, 128, 0, 0.9);
+  padding: 15px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: bold;
+}
+.hero-section {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 50px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+.start-btn {
+  display: inline-block;
+  padding: 20px 40px;
+  background: #ffff00;
+  color: black;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 50px;
+  transition: transform 0.3s;
+  margin-top: 20px;
+}
+.start-btn:hover { transform: scale(1.1); }

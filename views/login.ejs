@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoGenius Login</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <div class="auth-container">
+    <h1>Log Into GeoGenius!</h1>
+    <p style="font-size: 1.2rem;">Log in to save your scores!</p>
+    <form action="/users/login" method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit" class="auth-button">Login</button>
+    </form>
+    <a href="/users/register">Don't have an account? Register Here</a>
+  </div>
+</body>
+</html>

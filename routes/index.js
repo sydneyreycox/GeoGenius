@@ -13,7 +13,11 @@ var db = mysql.createPool({
 router.get('/game', function(req, res, next) {
   db.query('SELECT * FROM question', (err, results) => {
     if (err) throw err;
-    res.render('game', {question: results});
+
+    res.render('game', {
+      question: results,
+      user: req.session.user || null
+    });
   });
 });
 
@@ -38,9 +42,25 @@ router.get('/api/questions', function(req, res) {
   });
 });
 
-router.get('/', function(req, res, next) {
-  res.render('home');
+router.post('/api/save-score', function(req,res) {
+  if (!req.session.user) {
+    return res.status(401).send('Login REquired!');
+  }
+  var newScore = req.body.score;
+  var userId = req.session.user.id;
+
+  var sql = 'UPDATE user SET score = score + ? WHERE id = ?';
+  db.query(sql, [newScore, userId], (err, result) => {
+    if (err) {
+      return res.status(500).send('Error Saving Score!');
+    }
+    res.json({ message: 'Score Saved' });
+  });
 });
 
+router.get('/', function(req, res, next) {
+  //this is to make it user optional! Guests allowed now
+  res.render('home', { user: req.session.user || null });
+});
 
 module.exports = router;

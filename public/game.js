@@ -59,6 +59,7 @@ var startTimer = () => {
 var updateTimer = () => {
   timerElement.textContent = `Time: ${timeLeft}s`;
 };
+
 var handleTimeout = () => {
   isClickable = false;
   clearInterval(timer);
@@ -68,14 +69,20 @@ var handleTimeout = () => {
   showCorrectLocation(currentQuestion.lat, currentQuestion.lng);
 }
 
-
 var loadQuestion = () => {
   if (questions.length === 0) return;
+
   if (currentQuestionIdx >= questions.length) {
     clearInterval(timer);
-    questionElement.textContent = `Your Final Score: ${points}`
+    questionElement.textContent = `Game Finished!`;
+
+    document.getElementById("final-score-display").textContent = points;
+    document.getElementById("end-game-modal").style.display = "flex";
+
+    if(currentUser !== "") {
+      saveScore(points);
+    }
     updateTimer();
-    //alert(`Your final score is ${points}.`);
   }
   else{
     isClickable = true;
@@ -127,6 +134,19 @@ var checkAnswer = (e) => {
 
   
   currentQuestionIdx = (currentQuestionIdx + 1);
+}
+
+function saveScore(finalPoints) {
+  fetch('api/save-score', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ score : finalPoints }),
+  })
+  .then(response => response.json())
+  .then(data => console.log('Success:', data))
+  .catch((error) => console.error('Error:', error));
 }
 
 map.on("click", checkAnswer);
