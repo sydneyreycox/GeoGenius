@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>GeoGenius</title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
@@ -16,8 +17,35 @@
       <% } %>
     </div>
   </nav>
-  <div class="hero-section">
-    <a href="/game" class="start-btn">START QUIZ</a>
-  </div>
+  <div class="home-container">
+      <div class="left-panel">
+        <div class="buttons">
+          <button class="play-button">Test your knowledge</button>
+          <button class="explore-button">Explore the world</button>
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="leaderboard">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+               <% players.forEach((player, index) => { %> 
+                <tr>
+                    <td><%= index + 1 %></td> 
+                    <td><%= player.name %></td>
+                    <td><%= player.score %></td>
+                </tr>
+            <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

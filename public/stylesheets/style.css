@@ -74,7 +74,7 @@ a {
   border-radius: 15px;
   text-align: center;
   border: 4px solid #ffff00;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   color: white;
   min-width: 300px;
 }
@@ -97,7 +97,7 @@ a {
   background: #008000;
   padding: 40px;
   border-radius: 15px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 400px;
   text-align: center;
@@ -178,4 +178,76 @@ nav {
   transition: transform 0.3s;
   margin-top: 20px;
 }
-.start-btn:hover { transform: scale(1.1); }
+.start-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Home page styles */
+.home-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.left-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: yellow;
+  color: black;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+}
+
+button:hover {
+  background-color: darkgrey;
+  transform: scale(1.05);
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.leaderboard {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  padding-top: 50px;
+  margin: 70px;
+  border-radius: 10px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid white;
+}
+
+th {
+  background: green;
+}
