@@ -192,11 +192,13 @@ nav {
 .left-panel {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding-top: 75px;
 }
 
 .buttons {
+  padding-top: 75px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -234,6 +236,12 @@ button:hover {
   margin: 70px;
   border-radius: 10px;
   overflow-y: auto;
+}
+.leaderboard strong {
+  font-size: 1.5rem;
+  color: #ffff00;
+  display: inline-block;
+  text-shadow: 0 0 8px rgba(255, 204, 0, 0.7);
 }
 
 table {

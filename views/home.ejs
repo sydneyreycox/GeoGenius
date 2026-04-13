@@ -21,8 +21,9 @@
       <div class="left-panel">
         <div class="buttons">
           <button class="play-button">Test your knowledge</button>
-          <button class="explore-button">Explore the world</button>
-        </div>
+          <div class="previewMap">
+            
+          </div>
       </div>
       <div class="right-panel">
         <div class="leaderboard">
@@ -37,9 +38,15 @@
             <tbody>
                <% players.forEach((player, index) => { %> 
                 <tr>
+                    <%if (user && user.username === player.username) { %>
+                        <td><strong><%= index + 1 %></strong></td> 
+                        <td><strong><%= player.username %></strong></td>
+                        <td><strong><%= player.score %></strong></td>
+                    <% } else { %>
                     <td><%= index + 1 %></td> 
-                    <td><%= player.name %></td>
+                    <td><%= player.username %></td>
                     <td><%= player.score %></td>
+                    <% } %>
                 </tr>
             <% }); %>
             </tbody>

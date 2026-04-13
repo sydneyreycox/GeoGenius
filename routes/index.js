@@ -59,7 +59,7 @@ router.post('/api/save-score', function(req,res) {
 });
 
 router.get('/', function(req, res, next) {
-  db.query('SELECT name, score FROM `user` ORDER BY score DESC', (err, results) => {
+  db.query('SELECT username, score FROM `user` ORDER BY score DESC', (err, results) => {
     if (err) {
       console.error(err);
       return res.render('home', { user: req.session.user || null, players: [] });
