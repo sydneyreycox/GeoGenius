@@ -59,15 +59,13 @@ router.post('/api/save-score', function(req,res) {
 });
 
 router.get('/', function(req, res, next) {
-  const players = [
-        { name: "Alice", score: 1200 },
-        { name: "Bob", score: 900 },
-        { name: "Charlie", score: 1100 }
-    ];
-    // Sort players by score descending
-    players.sort((a, b) => b.score - a.score);
-  //this is to make it user optional! Guests allowed now
-  res.render('home', { user: req.session.user || null, players });
+  db.query('SELECT name, score FROM `user` ORDER BY score DESC', (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.render('home', { user: req.session.user || null, players: [] });
+    }
+    res.render('home', { user: req.session.user || null, players: results });
+  });
 });
 
 module.exports = router;
