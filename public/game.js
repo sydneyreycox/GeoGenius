@@ -4,7 +4,9 @@ var map = L.map("map", {
   center: [20, 0],
   zoom: 2,
   zoomControl: false,
-  worldCopyJump: true
+  worldCopyJump: true,
+  zoomAnimationThreshold: 100,
+  maxZoom: 12
 })
 var points = 0;
 
@@ -20,7 +22,7 @@ var points = 0;
 
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
 	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
-	maxZoom: 16
+	maxZoom: 12
 }).addTo(map);
 
 var questionElement = document.getElementById("question");
@@ -66,7 +68,7 @@ var handleTimeout = () => {
   var currentQuestion = questions[currentQuestionIdx]
   currentQuestionIdx++;
   questionElement.textContent = `Time is up! Answer was ${currentQuestion.Answer}`;
-  showCorrectLocation(currentQuestion.lat, currentQuestion.lng);
+  showCorrectLocation(null , currentQuestion.lat, currentQuestion.lng);
 }
 
 var loadQuestion = () => {
@@ -85,6 +87,7 @@ var loadQuestion = () => {
     updateTimer();
   }
   else{
+    map.setZoom(2, { animate: true });
     isClickable = true;
     var currentQuestion = questions[currentQuestionIdx];
     questionElement.textContent = currentQuestion.question;
@@ -92,7 +95,7 @@ var loadQuestion = () => {
   }
 }
 
-var showCorrectLocation = (lat, lng) => {
+var showCorrectLocation = (e, lat, lng) => {
   var marker = L.marker([lat, lng], {
     icon: L.divIcon({
       className: "correct-location",
@@ -101,15 +104,42 @@ var showCorrectLocation = (lat, lng) => {
       iconAnchor: [8, 6]
     }),
   }).addTo(map);
-  map.flyTo([lat, lng], 6, {
-    animate: true,
-    duration: 1,
-  });
 
-  setTimeout(() => {
-    map.removeLayer(marker);
-    loadQuestion();
-  }, 3000)
+  if (e == null) {
+    //no answer, so only look at correct location
+    map.setView([lat,lng], 6, {animated: true});
+    setTimeout(() => {
+      map.removeLayer(marker);
+      loadQuestion();
+    }, 3000)
+    
+  } else {
+    var guesslat = e.latlng.lat;
+    var guesslng = e.latlng.lng;
+    var guessMarker = L.marker([guesslat, guesslng], {
+      icon: L.divIcon({
+        className: "guess-location",
+        html: '<div style="background: yellow; width: 15px; height: 15px; border-radius: 50%; border-style: solid; border-color:white;"></div>',
+        iconSize: [15, 15],
+        iconAnchor: [8, 6]
+      }),
+    }).addTo(map);
+
+    var polyline = L.polyline([
+      [guesslat, guesslng], [lat, lng]
+    ], {
+      color: 'black'
+    }).addTo(map);
+
+    map.fitBounds(polyline.getBounds(), { padding: [50,50], animate: true } );
+
+    setTimeout(() => {
+      map.removeLayer(marker);
+      map.removeLayer(guessMarker);
+      map.removeLayer(polyline);
+      loadQuestion();
+    }, 3000)
+  }
 }
 
 var checkAnswer = (e) => {
@@ -129,7 +159,8 @@ var checkAnswer = (e) => {
   var currentPoints = Math.max(0, 1000 - Math.floor(distance / 15000) * 100);
   points +=  currentPoints;
   scoreElement.textContent = `Score: ${points}`;
-  showCorrectLocation(currentQuestion.lat, currentQuestion.lng);
+  showCorrectLocation(e, currentQuestion.lat, currentQuestion.lng);
+
   questionElement.textContent = "The Answer was " + currentQuestion.Answer + ". You got " + currentPoints + " points!";
 
   
