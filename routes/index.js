@@ -68,4 +68,14 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/api/cities', function(req, res) {
+  db.query('SELECT id, name, lat, lng FROM city', (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json({ cities: results });
+  });
+});
+
 module.exports = router;
