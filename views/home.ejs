@@ -12,6 +12,10 @@
     <div class="logo">🌍 GeoGenius</div>
     <div class="nav-links">
       <% if (user) { %>
+        <% if (user.is_admin) { %>
+          <a href="/admin" class="admin-button">ADMIN PANEL</a>
+        <% } %>
+        
         <span>Welcome, <strong><%= user.username %></strong></span>
         <a href="/users/logout">Logout</a>
       <% } else { %>

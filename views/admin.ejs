@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body class="admin-body">
+    <nav>
+        <div class="logo">🌍 Admin Panel</div>
+        <div class="nav-links">
+            <a href="/">⬅ Back to Home</a>
+        </div>
+    </nav>
+
+    <main class="admin-main">
+        <div class="admin-wrapper">
+            <!-- USER MANAGEMENT -->
+            <section class="admin-section">
+                <h2>Manage Users</h2>
+                <div class="table-scroll-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(u => { %>
+                            <tr>
+                                <td><%= u.username %></td>
+                                <td><%= u.score %></td>
+                                <td><%= u.is_admin ? '⭐ Admin' : 'Player' %></td>
+                                <td>
+                                    <% if (u.id !== user.id) { %>
+                                        <a href="/admin/user/delete/<%= u.id %>" class="delete-link" onclick="return confirm('Delete this user?')">Delete</a>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                </div>
+            </section>
+
+            <!-- ADD NEW CITY -->
+            <section class="admin-section">
+                <h2>Add a New City</h2>
+                <form action="/admin/city/add" method="POST" class="admin-form">
+                    <input type="text" name="name" placeholder="City Name" required>
+                    <input type="number" step="any" name="lat" placeholder="Latitude" required>
+                    <input type="number" step="any" name="lng" placeholder="Longitude" required>
+                    <button type="submit">Add City</button>
+                </form>
+            </section>
+
+            <!-- ADD NEW QUESTION -->
+            <section class="admin-section">
+                <h2>Add a New Question</h2>
+                <form action="/admin/question/add" method="POST" class="admin-form">
+                    <input type="text" name="text" placeholder="Question Text (e.g. Where is the Louvre?)" required style="flex: 2;">
+                    <select name="answer" required>
+                        <option value="" disabled selected>Select Correct City</option>
+                        <% cities.forEach(c => { %>
+                            <option value="<%= c.id %>"><%= c.name %></option>
+                        <% }) %>
+                    </select>
+                    <button type="submit">Add Question</button>
+                </form>
+            </section>
+            <!-- MANAGE QUESTIONS -->
+            <section class="admin-section">
+                <h2>Manage Questions</h2>
+                <div class="table-scroll-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Question Text</th>
+                            <th>Correct City</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% questions.forEach(q => { %>
+                            <tr>
+                                <td><%= q.text %></td>
+                                <td>
+                                    <% const correctCity = cities.find(c => c.id === q.answer); %>
+                                    <%= correctCity ? correctCity.name : 'Unknown City' %>
+                                </td>
+                                <td>
+                                    <a href="/admin/question/delete/<%= q.id %>" class="delete-link" onclick="return confirm('Delete this question?')">Delete</a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                </div>
+            </section>
+
+            <!-- MANAGE CITIES -->
+            <section class="admin-section">
+                <h2>Manage Cities</h2>
+                <div class="table-scroll-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>City Name</th>
+                            <th>Coords (Lat, Lng)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% cities.forEach(c => { %>
+                            <tr>
+                                <td><%= c.name %></td>
+                                <td><%= c.lat %>, <%= c.lng %></td>
+                                <td>
+                                    <a href="/admin/city/delete/<%= c.id %>" class="delete-link" onclick="return confirm('Delete this city? You will be denied if it contains any questions!')">Delete</a>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

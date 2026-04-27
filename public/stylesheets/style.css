@@ -183,6 +183,20 @@ nav {
 }
 
 /* Home page styles */
+.admin-button {
+    background-color: #ff9800;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.admin-button:hover {
+    background-color: #e68a00;
+}
+
 .home-container {
   display: flex;
   width: 100%;
@@ -324,4 +338,135 @@ th {
   font-size: 1.3rem !important;
   margin: 0;
   color: white;
+}
+
+/* Admin Panel Styles */
+html:has(.admin-body),
+body.admin-body {
+  display: block !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+  padding: 0;
+  margin: 0;
+  background: skyblue;
+}
+
+.admin-main {
+  display: block !important;
+  width: 100%;
+  padding-top: 100px;
+  padding-bottom: 50px;
+  box-sizing: border-box;
+}
+
+.admin-wrapper {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1100px;
+}
+
+.admin-section {
+    background: #008000;
+    border: 3px solid #ffff00;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 40px;
+}
+
+.admin-section h2 {
+    color: #ffff00;
+    margin-top: 0;
+    border-bottom: 2px solid rgba(255, 255, 0, 0.3);
+    padding-bottom: 10px;
+    font-size: 2rem;
+}
+
+.admin-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    background: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.admin-form input, .admin-form select {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    flex: 1;
+    min-width: 150px;
+}
+
+.admin-form button {
+    background-color: #ffff00;
+    color: black;
+    font-weight: bold;
+    min-width: 100px;
+    cursor: pointer;
+}
+
+.admin-table {
+    width: 100%;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.admin-table th {
+    background: rgba(0,0,0,0.3);
+    color: #ffff00;
+    padding: 10px;
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 1.1rem;
+    color: white;
+}
+
+.delete-link {
+    color: #ff4444 !important;
+    text-decoration: none;
+    font-weight: bold;
+    background: rgba(0,0,0,0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.delete-link:hover {
+    background: #ff4444;
+    color: white !important;
+}
+
+.table-scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 2px solid rgba(255, 255, 0, 0.2);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+}
+
+.table-scroll-container::-webkit-scrollbar {
+    width: 8px;
+}
+.table-scroll-container::-webkit-scrollbar-track {
+    background: rgba(0, 128, 0, 0.5);
+}
+.table-scroll-container::-webkit-scrollbar-thumb {
+    background: #ffff00;
+    border-radius: 10px;
+}
+
+.admin-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #004d00;
 }

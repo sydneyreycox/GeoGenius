@@ -37,7 +37,12 @@ exports.postLogin = (req, res) => {
       if (err) return res.status(500).send('Comparison Error');
       if (!match) return res.status(401).send('Invalid Password');
 
-      req.session.user = { id: user.id, username: user.username };
+      req.session.user = {
+        id: user.id, 
+        username: user.username,
+        is_admin: user.is_admin
+      };
+      
       res.redirect('/');
     });
   });
