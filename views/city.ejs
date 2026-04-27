@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= city.name %> - GeoGenius</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+  <nav>
+    <div class="logo">🌍 GeoGenius</div>
+    <div class="nav-links">
+      <a href="/">← Back to Map</a>
+      <% if (user) { %>
+        <span>Welcome, <strong><%= user.username %></strong></span>
+      <% } %>
+    </div>
+  </nav>
+
+  <div class="city-page-container">
+    <!-- Header with yellow border -->
+    <div class="city-header-box">
+      <h1><%= city.name %></h1>
+      <p class="coords">Lat: <%= city.lat %> | Lng: <%= city.lng %></p>
+    </div>
+
+    <!-- Grid of cards -->
+    <div class="questions-grid">
+      <% if (questions.length > 0) { %>
+        <% questions.forEach(q => { %>
+          <div class="question-card-boxed">
+            <h2><%= q.text %></h2>
+          </div>
+        <% }); %>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

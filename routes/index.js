@@ -78,4 +78,26 @@ router.get('/api/cities', function(req, res) {
   });
 });
 
+router.get('/city/:id', function(req, res) {
+  const cityId = req.params.id;
+  const citySql = 'SELECT * FROM city WHERE id = ?';
+  const questionsSql = 'SELECT * FROM question WHERE answer = ?';
+
+  db.query(citySql, [cityId], (err, cityResults) => {
+    if (err) return res.status(500).send('Database error');
+    if (cityResults.length === 0) return res.status(404).send('City not found');
+
+    db.query(questionsSql, [cityId], (err, questionResults) => {
+      if (err) return res.status(500).send('Database error');
+
+      res.render('city', {
+        city: cityResults[0],
+        questions: questionResults,
+        user: req.session.user || null
+      });
+    });
+  });
+});
+
+
 module.exports = router;
