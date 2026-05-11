@@ -304,7 +304,8 @@ th {
 }
 
 .coords {
-  color: #ffff00 !important;
+  color: white !important;
+  /*color: #ffff00 !important;*/
   font-size: 1.2rem !important;
   margin-top: 10px;
 }
