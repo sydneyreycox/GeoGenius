@@ -6,17 +6,18 @@ CREATE TABLE city (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(150) NOT NULL,
     lat DECIMAL(10,8) NOT NULL,
-    lng DECIMAL(11,8) NOT NULL
+    lng DECIMAL(11,8) NOT NULL,
+    cityImage VARCHAR(255)
 );
 
 -- Data: city
-INSERT INTO city (id, name, lat, lng) VALUES
-(1, 'Washington D.C', 38.89425000, -77.03965000),
-(2, 'San Antonio', 29.42430900, -98.49467900),
-(3, 'Rio de Janeiro', -22.95191600, -43.21048700),
-(4, 'Sichuan', 30.65090000, 104.07570000),
-(5, 'Paris', 48.85840000, 2.29450000),
-(6, 'Cairo', 29.97920000, 31.13420000),
+INSERT INTO city (id, name, lat, lng, cityImage) VALUES
+(1, 'Washington D.C', 38.89425000, -77.03965000, 'WashingtonDCImage.png'),
+(2, 'San Antonio', 29.42430900, -98.49467900, 'SanAntonioImage.png'),
+(3, 'Rio de Janeiro', -22.95191600, -43.21048700, 'RioDeJaneiroImage.png'),
+(4, 'Sichuan', 30.65090000, 104.07570000, 'SichuanImage.png'),
+(5, 'Paris', 48.85840000, 2.29450000, 'ParisImage.png'),
+(6, 'Cairo', 29.97920000, 31.13420000, 'CairoImage.png'),
 (7, 'Minneapolis', 44.97780000, -93.26500000),
 (8, 'Mexico City', 19.43260000, -99.13320000),
 (9, 'Tokyo', 35.67640000, 139.65000000),
