@@ -7,15 +7,18 @@ exports.getRegister = (req, res) => {
 };
 
 exports.postRegister = (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, passwordCheck } = req.body;
   const saltRounds = 10;
+
+  if (password!=passwordCheck) return res.status(500).send('Passwords did not match');
 
   bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
     if (err) return res.status(500).send('Hashing Error');
 
     const sql = 'INSERT INTO user (username, password) VALUES (?, ?)';
     db.query(sql, [username, hashedPassword], (err) => {
-      if (err) return res.status(500).send('Registration Failed!');
+      if (err.code === 'ER_DUP_ENTRY') return res.status(500).send('Username already in use');
+      else if (err) return res.status(500).send('Registration error!');
       res.redirect('/users/login');
     });
   });
