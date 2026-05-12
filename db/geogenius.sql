@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS geogenius_db;
+DROP DATABASE IF EXISTS geogenius_db;
+CREATE DATABASE geogenius_db;
 USE geogenius_db;
 
 -- Table: city
@@ -278,31 +279,23 @@ CREATE TABLE user (
     is_admin BOOLEAN DEFAULT FALSE
 );
 
---Table: score
 
-CREATE TABLE score (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    userId INT NOT NULL,
-    tagId INT NOT NULL,
-    score INT NOT NULL,
-    FOREIGN KEY (userId) REFERENCES user(id),
-    FOREIGN KEY (tagId) REFERENCES tag(tagId)
-);
+
 -- Data: user
-INSERT INTO user (id, username, score, password, is_admin) VALUES
-(1, 'gael', 17900, '$2b$10$zv2MtpkRuj6cZwha8yo9hOcLpz8wuf3vBNF3Yjk2.zbEJ2zM8p8X.', 0),
-(3, 'Molld', 7700, '$2b$10$trdibi.BaptW9KBu0BEL4e/cQ.jbb6nNPLK7GPUs2tFxx38xbU76.', 0),
-(6, 'chicken', 0, '$2b$10$OM8Hu84K7.lebxDy40rY0OTjg5G/1dsVFt.UdIfZs7vD8CSnU6Abi', 0),
-(7, 'admin', 1000, '$2b$10$Ti3JfXS/vD8fUqtO1ljzSum7iSZfJHIRs56xLfZA.gObtfIraAoFK', 1);
+INSERT INTO user (id, username, password, is_admin) VALUES
+(1, 'gael', '$2b$10$zv2MtpkRuj6cZwha8yo9hOcLpz8wuf3vBNF3Yjk2.zbEJ2zM8p8X.', 0),
+(3, 'Molld', '$2b$10$trdibi.BaptW9KBu0BEL4e/cQ.jbb6nNPLK7GPUs2tFxx38xbU76.', 0),
+(6, 'chicken', '$2b$10$OM8Hu84K7.lebxDy40rY0OTjg5G/1dsVFt.UdIfZs7vD8CSnU6Abi', 0),
+(7, 'admin', '$2b$10$Ti3JfXS/vD8fUqtO1ljzSum7iSZfJHIRs56xLfZA.gObtfIraAoFK', 1);
 
---Table: tag
+-- Table: tag
 -- Stores the different tags that can be assigned to the cities
 CREATE TABLE tag (
     tagId INT AUTO_INCREMENT PRIMARY KEY,
     tagName VARCHAR(50) NOT NULL UNIQUE
 );
 
---Table: cityTag
+-- Table: cityTag
 -- Junction table for connecting tags to cities
 CREATE TABLE cityTag (
     cityId INT,
@@ -315,14 +308,14 @@ CREATE TABLE cityTag (
 -- Data: tag
 -- Generated tag connections utilizing Claude.ai
 INSERT INTO tag (tagName) VALUES
-('world'),       -- 1
-('north_america'), -- 2
-('south_america'), -- 3
-('europe'),      -- 4
-('asia'),        -- 5
-('africa'),      -- 6
-('middle_east'), -- 7
-('usa');         -- 8
+('World'),       -- 1
+('North America'), -- 2
+('South America'), -- 3
+('Europe'),      -- 4
+('Asia'),        -- 5
+('Africa'),      -- 6
+('Middle East'), -- 7
+('USA');         -- 8
 
 -- Every city gets world
 INSERT INTO cityTag (cityId, tagId)
@@ -347,3 +340,13 @@ INSERT INTO cityTag (cityId, tagId) VALUES
 INSERT INTO cityTag (cityId, tagId) VALUES
 (1, 8), (2, 8), (7, 8), (16, 8), (17, 8),
 (20, 8), (25, 8), (26, 8), (28, 8);
+
+-- Table: score
+CREATE TABLE score (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    tagId INT NOT NULL,
+    score INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES `user`(id),
+    FOREIGN KEY (tagId) REFERENCES tag(tagId)
+);

@@ -177,12 +177,12 @@ var checkAnswer = (e) => {
 }
 
 function saveScore(finalPoints) {
-  fetch('api/save-score', {
+  fetch(`/api/save-score`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({ score : finalPoints }),
+    body: JSON.stringify({ score : finalPoints, tag: tagId }),
   })
   .then(response => response.json())
   .then(data => console.log('Success:', data))

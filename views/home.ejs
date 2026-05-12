@@ -27,8 +27,13 @@
   <div class="home-container">
       <div class="left-panel">
         <div class="buttons">
+          <select id="tag-select">
+            <% tags.forEach(tag => { %>
+              <option value="<%= tag.tagId %>" <%= tag.tagId === 1 ? 'selected' : '' %>><%= tag.tagName %></option>
+            <% }) %>
+          </select>
           <button class="play-button">Test your knowledge</button>
-          
+        
         </div>
         <div id="map"></div>
       </div>
@@ -59,10 +64,6 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
        crossorigin=""></script>
-<script>
-    document.querySelector('.play-button').addEventListener('click', function() {
-      window.location.href = '/game';
-    });
-  </script>
+  <script src="/leaderboard.js"></script>
   <script src="/home.js"></script>
 </html>

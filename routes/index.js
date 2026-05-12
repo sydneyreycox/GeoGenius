@@ -19,6 +19,8 @@ router.get('/city/:id', gameController.getCityPage);
 router.get('/api/cities', gameController.getCitiesApi);
 router.get('/api/questions', gameController.getQuestionsApi);
 router.post('/api/save-score', gameController.saveScoreApi);
+router.get('/api/leaderboard', gameController.getLeaderboardApi);
+
 
 // Admin Routes
 router.get('/admin', isAdmin, adminController.getAdminPage);
