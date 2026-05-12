@@ -12,7 +12,7 @@ var isAdmin = (req, res, next) => {
 
 // Page Routes
 router.get('/', gameController.getHomePage);
-router.get('/game', gameController.getGame);
+router.get('/game/:id', gameController.getGame);
 router.get('/city/:id', gameController.getCityPage);
 
 // API Routes

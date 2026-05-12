@@ -13,12 +13,11 @@ exports.getHomePage = (req, res) => {
 };
 
 exports.getGame = (req, res) => {
-  db.query('SELECT * FROM question', (err, results) => {
-    if (err) throw err;
-    res.render('game', {
-      question: results,
-      user: req.session.user || null
-    });
+  const tagId = req.params.id;
+  res.render('game', {
+    question: results,
+    user: req.session.user || null,
+    tagId: tagId
   });
 };
 
@@ -50,13 +49,16 @@ exports.getCitiesApi = (req, res) => {
 };
 
 exports.getQuestionsApi = (req, res) => {
+  const tagId = req.query.tag;
   const sql = `
     SELECT q.text AS question, c.lat, c.lng, c.name AS Answer
     FROM question q
     JOIN city c ON q.answer = c.id
+    JOIN cityTag ct ON c.id = ct.cityId
+    WHERE ct.tagId = ?
     ORDER BY RAND()
     LIMIT 5`;
-  db.query(sql, (err, results) => {
+  db.query(sql, [tagId], (err, results) => {
     if (err) return res.status(500).json({ error: 'Database error' });
     res.json({ questions: results });
   });

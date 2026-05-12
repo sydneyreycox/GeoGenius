@@ -87,18 +87,80 @@ INSERT INTO question (id, text, answer) VALUES
 (33, 'What is the capital of Mexico?', 8);
 
 -- Table: user
--- Stores user accounts and scores
+-- Stores user accounts 
 CREATE TABLE user (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    score INT DEFAULT 0,
     is_admin BOOLEAN DEFAULT FALSE
 );
 
+--Table: score
+
+CREATE TABLE score (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    tagId INT NOT NULL,
+    score INT NOT NULL,
+    FOREIGN KEY (userId) REFERENCES user(id),
+    FOREIGN KEY (tagId) REFERENCES tag(tagId)
+);
 -- Data: user
 INSERT INTO user (id, username, score, password, is_admin) VALUES
 (1, 'gael', 17900, '$2b$10$zv2MtpkRuj6cZwha8yo9hOcLpz8wuf3vBNF3Yjk2.zbEJ2zM8p8X.', 0),
 (3, 'Molld', 7700, '$2b$10$trdibi.BaptW9KBu0BEL4e/cQ.jbb6nNPLK7GPUs2tFxx38xbU76.', 0),
 (6, 'chicken', 0, '$2b$10$OM8Hu84K7.lebxDy40rY0OTjg5G/1dsVFt.UdIfZs7vD8CSnU6Abi', 0),
 (7, 'admin', 1000, '$2b$10$Ti3JfXS/vD8fUqtO1ljzSum7iSZfJHIRs56xLfZA.gObtfIraAoFK', 1);
+
+--Table: tag
+-- Stores the different tags that can be assigned to the cities
+CREATE TABLE tag (
+    tagId INT AUTO_INCREMENT PRIMARY KEY,
+    tagName VARCHAR(50) NOT NULL UNIQUE
+);
+
+--Table: cityTag
+-- Junction table for connecting tags to cities
+CREATE TABLE cityTag (
+    cityId INT,
+    tagId INT,
+    PRIMARY KEY (cityId, tagId),
+    FOREIGN KEY (cityId) REFERENCES city(id),
+    FOREIGN KEY (tagId) REFERENCES tag(tagId)
+);
+
+-- Data: tag
+-- Generated tag connections utilizing Claude.ai
+INSERT INTO tag (tagName) VALUES
+('world'),       -- 1
+('north_america'), -- 2
+('south_america'), -- 3
+('europe'),      -- 4
+('asia'),        -- 5
+('africa'),      -- 6
+('middle_east'), -- 7
+('usa');         -- 8
+
+-- Every city gets world
+INSERT INTO cityTag (cityId, tagId)
+SELECT id, 1 FROM city;
+
+-- North America
+INSERT INTO cityTag (cityId, tagId) VALUES
+(1, 2), (2, 2), (7, 2), (8, 2), (12, 2),
+(16, 2), (17, 2), (20, 2), (25, 2), (26, 2),
+(27, 2), (28, 2);
+
+-- Europe
+INSERT INTO cityTag (cityId, tagId) VALUES
+(5, 4), (10, 4), (14, 4), (15, 4), (18, 4),
+(19, 4), (21, 4), (23, 4), (24, 4), (30, 4);
+
+-- Asia
+INSERT INTO cityTag (cityId, tagId) VALUES
+(4, 5), (9, 5), (11, 5), (13, 5), (29, 5);
+
+-- USA
+INSERT INTO cityTag (cityId, tagId) VALUES
+(1, 8), (2, 8), (7, 8), (16, 8), (17, 8),
+(20, 8), (25, 8), (26, 8), (28, 8);

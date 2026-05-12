@@ -37,7 +37,7 @@ let timer;
 let timeLeft = 30; //seconds
 
 // Fetch questions from the server
-fetch('/api/questions')
+fetch(`/api/questions?tag=${tagId}`)
   .then(response => response.json())
   .then(data => {
     questions = data.questions;
