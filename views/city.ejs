@@ -8,16 +8,13 @@
   <nav>
     <div class="logo">🌍 GeoGenius</div>
     <div class="nav-links">
-      <a href="/">← Back to Map</a>
-      <% if (user) { %>
-        <span>Welcome, <strong><%= user.username %></strong></span>
-      <% } %>
+      <a href="/">← Back to Map  </a>
     </div>
   </nav>
 
   <div class="city-page-container">
     <!-- Header with yellow border -->
-    <div class="city-header-box">
+    <div class="city-header-box" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/images/<%= city.cityImage %>'); background-size: cover; background-position: center;">
       <h1><%= city.name %></h1>
       <p class="coords">📍 <%= city.lat %>, <%= city.lng %></p>
     </div>
