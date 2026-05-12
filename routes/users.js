@@ -8,6 +8,7 @@ router.post('/register', userController.postRegister); // Map this to your regis
 router.get('/login', userController.getLogin);
 router.post('/login', userController.postLogin);
 
+router.get('/profile', userController.getProfile);
 router.get('/logout', userController.logout);
 
 module.exports = router;

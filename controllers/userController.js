@@ -51,6 +51,16 @@ exports.postLogin = (req, res) => {
   });
 };
 
+exports.getProfile = (req, res) => {
+  if (!req.session.user) return res.redirect('/users/login');
+  const userId = req.session.user.id;
+  db.query('SELECT username, score FROM user WHERE id = ?', [userId], (err, rows) => {
+    if (err || rows.length === 0) return res.redirect('/');
+    const { username, score } = rows[0];
+    res.render('profile', { username, score });
+  });
+};
+
 exports.logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
