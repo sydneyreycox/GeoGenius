@@ -38,7 +38,7 @@ let timer;
 let timeLeft = 30; //seconds
 
 // Fetch questions from the server
-fetch('/api/questions')
+fetch(`/api/questions?tag=${tagId}`)
   .then(response => response.json())
   .then(data => {
     questions = data.questions;
@@ -177,12 +177,12 @@ var checkAnswer = (e) => {
 }
 
 function saveScore(finalPoints) {
-  fetch('api/save-score', {
+  fetch(`/api/save-score`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({ score : finalPoints }),
+    body: JSON.stringify({ score : finalPoints, tag: tagId }),
   })
   .then(response => response.json())
   .then(data => console.log('Success:', data))
