@@ -8,15 +8,18 @@
   <nav>
     <div class="logo">🌍 GeoGenius</div>
     <div class="nav-links">
-      <a href="/">← Back to Map</a>
+      <a href="/">← Back to Map  </a>
     </div>
   </nav>
 
   <div class="auth-container">
     <h1>Register</h1>
     <p style="font-size: 1.2rem;">Create an account to play!</p>
+    <% if (typeof error !== 'undefined') { %>
+    <p class="error-message"><%= error %></p>
+    <% } %>
     <form action="/users/register" method="POST">
-      <input type="text" name="username" placeholder="Choose a Username" required>
+      <input type="text" name="username" placeholder="Choose a Username" value="<%= typeof username !== 'undefined' ? username : '' %>" required>
       <input type="password" name="password" placeholder="Choose a Password" required>
       <input type="password" name="passwordCheck" placeholder="Verify Password" required>
       <button type="submit" class="auth-button">Create Account</button>

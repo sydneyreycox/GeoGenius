@@ -1,13 +1,14 @@
-// Initialize map
-//const map = L.map("map").setView([20, 0], 2);
 var map = L.map("map", {
   center: [20, 0],
   zoom: 2,
+  minZoom: 2,
+  maxZoom: 12,
   zoomControl: false,
   worldCopyJump: true,
-  zoomAnimationThreshold: 100,
-  maxZoom: 12
-})
+  maxBounds: [[-90, -180], [90, 180]],
+  maxBoundsViscosity: 1.0,
+});
+
 var points = 0;
 
 /* L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
@@ -142,6 +143,11 @@ var showCorrectLocation = (e, lat, lng) => {
   }
 }
 
+function scoreMultiplier(timeRemaining, minimum) {
+  if (timeRemaining <= minimum) return minimum / 30;
+  return timeRemaining / 30;
+}
+
 var checkAnswer = (e) => {
   if(!isClickable) return;
 
@@ -155,9 +161,12 @@ var checkAnswer = (e) => {
     [lat, lng],
     [currentQuestion.lat, currentQuestion.lng]
   )
-  //maybe add timer options for extra points? KINDA PUNISHING FOR BIG CITIES!
-  var currentPoints = Math.max(0, 1000 - Math.floor(distance / 15000) * 100);
-  points +=  currentPoints;
+
+  // currentPoints is calculated via an exponential decay function.
+  // Assuming the average city has a radius of 30km, guessing at the edge gives a score of ~740, which we think is fair.
+  // It is then scaled by a time multiplier which floors at (score * 1.3) with <=10s remaining
+  var currentPoints = Math.round(1000 * Math.exp(-distance / 100000) * scoreMultiplier(timeLeft, 10));
+  points += currentPoints;
   scoreElement.textContent = `Score: ${points}`;
   showCorrectLocation(e, currentQuestion.lat, currentQuestion.lng);
 
