@@ -1,13 +1,14 @@
-// Initialize map
-//const map = L.map("map").setView([20, 0], 2);
 var map = L.map("map", {
   center: [20, 0],
   zoom: 2,
+  minZoom: 2,
+  maxZoom: 12,
   zoomControl: false,
   worldCopyJump: true,
-  zoomAnimationThreshold: 100,
-  maxZoom: 12
-})
+  maxBounds: [[-90, -180], [90, 180]],
+  maxBoundsViscosity: 1.0,
+});
+
 var points = 0;
 
 /* L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {

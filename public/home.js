@@ -1,14 +1,12 @@
-var corner1 = L.latLng(40.712, -74.227)
-var corner2 = L.latLng(40.774, -74.125)
-var bounds = L.latLngBounds(corner1, corner2);
-
 var map = L.map("map", {
   center: [20, 0],
   zoom: 2,
+  minZoom: 2,
+  maxZoom: 12,
   zoomControl: false,
   worldCopyJump: true,
-  bounds: bounds,
-  maxBoundsViscosity: 1,
+  maxBounds: [[-90, -180], [90, 180]],
+  maxBoundsViscosity: 1.0,
 });
 
 
