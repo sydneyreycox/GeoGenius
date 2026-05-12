@@ -155,9 +155,10 @@ var checkAnswer = (e) => {
     [lat, lng],
     [currentQuestion.lat, currentQuestion.lng]
   )
-  //maybe add timer options for extra points? KINDA PUNISHING FOR BIG CITIES!
-  var currentPoints = Math.max(0, 1000 - Math.floor(distance / 15000) * 100);
-  points +=  currentPoints;
+
+  // currentPoints is calculated via an exponential decay function. Assuming the average city has a radius of 30km, guessing at the edge gives a score of ~740, which we think is fair. 
+  var currentPoints = Math.round(1000 * Math.exp(-distance / 100000));
+  points += currentPoints;
   scoreElement.textContent = `Score: ${points}`;
   showCorrectLocation(e, currentQuestion.lat, currentQuestion.lng);
 
