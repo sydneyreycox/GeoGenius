@@ -471,3 +471,12 @@ body.admin-body {
     z-index: 10;
     background: #004d00;
 }
+
+.error-message {
+  color: #c0392b;
+  background: #fdf0f0;
+  border: 1px solid #e74c3c;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}

@@ -15,8 +15,11 @@
   <div class="auth-container">
     <h1>Log Into GeoGenius!</h1>
     <p style="font-size: 1.2rem;">Log in to save your scores!</p>
+    <% if (typeof error !== 'undefined') { %>
+      <p class="error-message"><%= error %></p>
+    <% } %>
     <form action="/users/login" method="POST">
-      <input type="text" name="username" placeholder="Username" required>
+      <input type="text" name="username" placeholder="Username" value="<%= typeof username !== 'undefined' ? username : '' %>" required>
       <input type="password" name="password" placeholder="Password" required>
       <button type="submit" class="auth-button">Login</button>
     </form>
