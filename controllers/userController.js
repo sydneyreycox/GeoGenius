@@ -51,13 +51,21 @@ exports.postLogin = (req, res) => {
   });
 };
 
+//hotfix by claude
 exports.getProfile = (req, res) => {
   if (!req.session.user) return res.redirect('/users/login');
   const userId = req.session.user.id;
-  db.query('SELECT username, score FROM user WHERE id = ?', [userId], (err, rows) => {
-    if (err || rows.length === 0) return res.redirect('/');
-    const { username, score } = rows[0];
-    res.render('profile', { username, score });
+  db.query('SELECT username FROM `user` WHERE id = ?', [userId], (err, rows) => {
+    //if (err || rows.length === 0) return res.redirect('/');
+    const { username } = rows[0];
+    db.query(
+      'SELECT SUM(s.score) as score FROM score s WHERE s.userId = ?',
+      [userId],
+      (err, score) => {
+        //if (err) return res.redirect('/');
+        res.render('profile', { username, score: score[0] });
+      }
+    );
   });
 };
 
